@@ -1,0 +1,20 @@
+```c
+#define RETURN_BOOL(b)              { RETVAL_BOOL(b); return; }
+#define RETURN_NULL()              { RETVAL_NULL(); return;}
+#define RETURN_LONG(l)                 { RETVAL_LONG(l); return; }
+#define RETURN_DOUBLE(d)            { RETVAL_DOUBLE(d); return; }
+#define RETURN_STR(s)              { RETVAL_STR(s); return; }
+#define RETURN_INTERNED_STR(s)       { RETVAL_INTERNED_STR(s); return; }
+#define RETURN_NEW_STR(s)           { RETVAL_NEW_STR(s); return; }
+#define RETURN_STR_COPY(s)          { RETVAL_STR_COPY(s); return; }
+#define RETURN_STRING(s)            { RETVAL_STRING(s); return; }
+#define RETURN_STRINGL(s, l)         { RETVAL_STRINGL(s, l); return; }
+#define RETURN_EMPTY_STRING()        { RETVAL_EMPTY_STRING(); return; }
+#define RETURN_RES(r)              { RETVAL_RES(r); return; }
+#define RETURN_ARR(r)              { RETVAL_ARR(r); return; }
+#define RETURN_OBJ(r)              { RETVAL_OBJ(r); return; }
+#define RETURN_ZVAL(zv, copy, dtor)       { RETVAL_ZVAL(zv, copy, dtor); return; }
+#define RETURN_FALSE               { RETVAL_FALSE; return; }
+#define RETURN_TRUE                { RETVAL_TRUE; return; }
+```
+经常用于返回数据的宏方法，见zend/zend_API.h
