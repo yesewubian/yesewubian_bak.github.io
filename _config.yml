@@ -1,4 +1,10 @@
 theme: minima
 title: dearmrli的博客
 description: dearmrli的技术博客
-show_downloads: false
+
+# Build settings
+markdown: kramdown
+theme: minima
+exclude:
+  - Gemfile
+  - Gemfile.lock
