@@ -5,4 +5,3 @@ example/_site
 _site
 .sass-cache
 *.gem
-.idea/*
