@@ -1,0 +1,34 @@
+re2c [官网地址](http://re2c.org/index.html)
+
+
+Re2C是一个免费的开源的C语言和C++语言的生成器。它的主要目标是生成快速的lexer：至少和他们合理优化的手工编码的对应程序一样快。RE2C不使用传统的表驱动方法，而是直接以条件跳转和比较的形式对生成的有限状态自动机进行编码。结果产生的程序比表驱动的类似程序更快，而且通常更小，而且更容易调试和理解。为了加快和压缩生成的代码，RE2C应用了很多优化。另一个显著的特点是它的灵活接口：RE2C不需要假定固定的程序模板，而是允许程序员编写大部分接口代码，并使生成的lexer适应任何特定的环境。
+
+
+
+[官方文档](http://re2c.org/manual/syntax/syntax.html)
+
+一个程序可以包含任意数量的RE2C块。每个块由一系列定义、配置和规则组成，这些定义、配置和规则包含正则表达式。生成的lexer使用接口代码与外部世界通信。
+
+####语法
+
+```
+/*!re2c
+    /* 配置 */
+    re2c:define:YYCTYPE = char;
+    re2c:yyfill:enable = 0;
+
+    /* 定义 */
+    end = "\x00";
+    bin = '0b' [01]+;
+    oct = "0" [0-7]*;
+    dec = [1-9][0-9]*;
+    hex = '0x' [0-9a-fA-F]+;
+
+    /* 规则 */
+    *       { return ERR; }
+    bin end { return BIN; }
+    oct end { return OCT; }
+    dec end { return DEC; }
+    hex end { return HEX; }
+*/
+```
