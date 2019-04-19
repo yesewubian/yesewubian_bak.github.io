@@ -1,4 +1,4 @@
-#JavaScript语言精粹 笔记
+#JavaScript语言精粹 笔记一
 
 ##数字
 
