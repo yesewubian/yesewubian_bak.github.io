@@ -1,0 +1,98 @@
+## 函数
+
+### 函数对象
+
+JavaScript中的函数就是对象。对象是“名/值”对的集合并拥有一个连接到原型对象的隐藏连接。对象字面量产生的对象连接到Object.prototype。函数对象连接到Function.prototype,每个函数在创建时会附加两个隐藏属性：函数的上下文和函数的代码。
+
+每个函数对象在创建时也随配一个prototype属性。它的值是一个拥有constructor属性且值即为该函数的对象。
+
+JavaScript在创建一个函数对象的时，会给该对象设置一个调用属性。当调用一个函数时可以理解为调用此函数的调用属性
+
+### 函数字面量
+
+```javascript
+var add = function(a,b) {
+  return a+b;
+}
+```
+函数字面量可以出现在任何允许表达式出现的地方。函数也可以被定义在其它的函数中。一个内部函数除了可以访问自己的参数和变量，同时也可以访问父函数的参数和变量。通过函数字面量创建的函数包含一个连接到外部上下文的连接，这被称为闭包（closure）。
+
+### 调用
+
+调用一个函数会传递控制权和参数新函数，除了声明时定义的形式参数，每个函数还接受两个附加的参数：this 和 arguments。参数this的值取决于调用的模式，在JavaScript中一共有四种调用模式：方法调用模式、函数调用模式、构造器调用模式和apply调用模式。这些模式在如何初始化关键参数this上存在差异。
+
+调用运算符是跟在任何一个函数表达式之后的一对圆括号。参数值不会进行类型和个数检查
+
+#### 方法调用模式
+
+当一个函数被当成一个对象的属性时，我们称它为一个方法。当一个方法被调用时，this被绑定到该对象。如果调用表达式包含一个提取属性的动作（即包含一个.表达式或[subscript]下标表达式），那么它就是被当做一个对象的方法来调用。
+```javascript
+var myObject = {
+    sum_value:0,
+    getSum: function(a,b){
+      sum_value = a+b; 
+    }
+};
+myObject.getSum(1,2);
+```
+方法可以通过this属性访问自己所属的对象，
+
+#### 函数调用模式
+
+当一个函数不属于一个对象时，它就是被当做一个函数来调用
+```javascript
+var value = 0;
+    var myObject = {
+        value: 0,
+    };
+    myObject.value = 5;
+    myObject.double = function () {
+        // var that = this;
+        var helper = function () {
+            this.value = this.value+1;
+        }
+        helper();
+    }
+    myObject.double();
+    console.log(myObject.value); //5
+    console.log(value); //1
+```
+以此模式来调用函数时，this被绑定到全局对象。有一个简单的解决方案，如果该方法定义一个变量并给它赋值this,那么内部函数就可以通过这个变量访问到this。按照约定，我们把那个变量命名为that。
+
+#### 构造器调用模式
+
+如果在一个函数前加上new来调用，那么背地里会创建一个连接到该函数的prototype属性的新对象，同时this会被绑定到新对象上。
+```javascript
+// 创建一个名为Quo的构造器函数，它构造一个带有status属性的对象。
+var Quo = function(string) {
+  this.status = string;
+};
+
+// 给Quo的所有实例提供一个名为get_status的公共方法。
+Quo.prototype.get_status = function() {
+  return this.status;
+}
+
+//构造一个Quo实例。
+var myQuo = new Quo('confused');
+console.log(myQuo.get_status()); //confused
+```
+一个函数如果创建的时候就是为了结合new来使用，那它就被称为构造器函数。按约定它保存在一大写格式命名的变量里。
+
+#### Apply
+
+apply反复允许我们构建一个参数数组传递给调用函数，它也允许我们制定this值。apply方法接受两个参数，第一个是要绑定给this的值，第二个就是一个参数数组。
+
+### 参数
+
+在函数调用时，会得到一个免费配送的参数 arguments 数组。包含所有传递给函数的参数（包括没有分配给定函数声明时定义的形式参数的多余参数）。arguments是一个类似数组的对象，它有一个length属性，但是没有任何数组方法。
+
+### 返回
+
+一个函数总是会返回一个值，如果没有指定返回值，就会返回undefined。
+
+如果函数在调用时前面加了new,且返回值不是一个对象，则返回this（该新对象）
+
+### 异常
+
+一个try语句只会有一个捕获所有异常的catch代码块。如果你的处理手段取决于异常的类型，那么异常处理器必须检查异常的name属性来确定异常类型。

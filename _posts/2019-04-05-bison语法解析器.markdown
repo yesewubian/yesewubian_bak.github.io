@@ -1,0 +1,43 @@
+BISON [文档地址](https://www.gnu.org/software/bison/manual/html_node/index.html)
+
+Bison是一个通用的解析器生成器，它将带注释的上下文无关语法转换为使用lalr（1）解析器表的确定性lr或广义lr（glr）解析器。作为实验特性，Bison还可以生成IERR（1）或规范的LR（1）解析器表。一旦你精通bison，你就可以用它来开发各种语言解析器，从简单的桌面计算器到复杂的编程语言。
+
+作为PHP的语法解析器，了解一下bison的有助于对PHP的理解
+
+##语法大纲
+bison语法文件有四个主要部分（序言、声明，语法规则、使用执行），这里用适当的分隔符显示：
+
+```
+%{
+  Prologue
+%}
+
+Bison declarations
+
+%%
+Grammar rules
+%%
+
+Epilogue
+```
+
+####Prologue
+序言部分包含宏定义以及语法规则中操作中使用的函数和变量的声明。它们被复制到解析器实现文件的开头，以便它们位于YYParse的定义之前。可以使用“include”从头文件获取声明。如果您不需要任何C声明，可以省略括在该节后面的“%”和“%”分隔符。
+
+####Bison declarations
+bison语法的bison声明部分定义了用于构造语法和语义值的数据类型的符号。参见符号。
+```
+%require "version" #依赖版本
+```
+
+```
+%token name #声明终端符号
+```
+Bison将把它转换成解析器中的定义，这样函数yylex（如果它在这个文件中）就可以使用名称来代表这个令牌类型的代码。或者，如果要指定关联性和优先级，可以使用%left、%right、%precedence或%nonassoc而不是%token。请参见运算符优先级。
+
+您可以通过在声明名称的%token声明的末尾写入文本字符串，将文本字符串标记与标记类型名称关联。C语言的语法可以使用等效的字符串标记指定这些名称：
+```
+%token  <operator>  OR      "||"
+%token  <operator>  LE 134  "<="
+%left  OR  "<="
+```
