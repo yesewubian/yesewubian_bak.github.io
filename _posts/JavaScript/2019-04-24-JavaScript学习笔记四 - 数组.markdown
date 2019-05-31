@@ -40,6 +40,18 @@ var is_array = function(value) {
 
 JavaScript提供一套数组可用的方法，这些方法被储存在Array.prototype中，Array.prototype可以被扩充。因为数组就是对象，所以我们可以直接给一个单独的数组添加方法
 
+array.concat(item...) 拼接数组
+array.join(separator) 复制元素拼成字符串
+array.pop() 移除最后一个元素并返回
+array.push(item...)  
+array.reverse() 翻转
+array.shift() 移除第一个元素并返回
+array.slice() 复制
+array.sort() 排序
+array.splice() 移除替换
+array.unshift() 在头部插入
+
+
 ### 初始值
 
 JavaScript的数组不会预置值，如果你用[]得到一个新数组,它将是空的。如果你访问一个不存在的元素，得到的值则是undefined.
