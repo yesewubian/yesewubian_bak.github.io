@@ -5,6 +5,7 @@ Bison是一个通用的解析器生成器，它将带注释的上下文无关语
 作为PHP的语法解析器，了解一下bison的有助于对PHP的理解
 
 ##语法大纲
+
 bison语法文件有四个主要部分（序言、声明，语法规则、使用执行），这里用适当的分隔符显示：
 
 ```
@@ -22,9 +23,11 @@ Epilogue
 ```
 
 ####Prologue
+
 序言部分包含宏定义以及语法规则中操作中使用的函数和变量的声明。它们被复制到解析器实现文件的开头，以便它们位于YYParse的定义之前。可以使用“include”从头文件获取声明。如果您不需要任何C声明，可以省略括在该节后面的“%”和“%”分隔符。
 
-####Bison declarations
+####Declarations
+
 bison语法的bison声明部分定义了用于构造语法和语义值的数据类型的符号。参见符号。
 ```
 %require "version" #依赖版本
@@ -41,3 +44,17 @@ Bison将把它转换成解析器中的定义，这样函数yylex（如果它在�
 %token  <operator>  LE 134  "<="
 %left  OR  "<="
 ```
+
+[所有 declarations 类型列表](https://www.gnu.org/software/bison/manual/html_node/Declarations.html#Declarations)
+
+#### Grammar rules
+
+语法规则部分包含一个或多个Bison语法规则，而不包含任何其他规则。请参阅语法规则的语法。
+
+必须始终至少有一个语法规则，并且第一个'%%'（在语法规则之前）可能永远不会被省略，即使它是文件中的第一个东西。
+
+#### Epilogue
+
+将Epilogue逐字复制到解析器实现文件的末尾，就像将Prologue复制到开头一样。这是将您想要的任何内容放在解析器实现文件中但最不需要在yyparse定义之前放置的最方便的地方。例如，yylex和yyerror的定义经常出现在这里。因为C要求在使用之前声明函数，所以即使你在Epilogue中定义它们，你也经常需要在Prologue中声明yylex和yyerror等函数。请参阅Parser C语言界面。
+
+如果最后一部分为空，则可以省略将其与语法规则分开的'%%'。
