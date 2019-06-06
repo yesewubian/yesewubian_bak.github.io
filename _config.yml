@@ -23,7 +23,7 @@ github_username:  yesewubian
 
 # Build settings
 markdown: kramdown
-theme: minima
+theme: minimal-mistakes-jekyll
 gems:
   - jekyll-feed
 exclude:
